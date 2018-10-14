@@ -1,4 +1,4 @@
-defmodule Raisin.Repo.Migrations.RenameUserAgentRepoUrlOnGames do
+defmodule Backbone.Repo.Migrations.RenameUserAgentRepoUrlOnGames do
   use Ecto.Migration
 
   def change do

@@ -1,4 +1,4 @@
-defmodule Raisin.Repo.Migrations.AddAllowCharacterRegistrationToGames do
+defmodule Backbone.Repo.Migrations.AddAllowCharacterRegistrationToGames do
   use Ecto.Migration
 
   def change do

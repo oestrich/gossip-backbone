@@ -1,4 +1,4 @@
-defmodule Raisin.Repo.Migrations.AddIndexesToTables do
+defmodule Backbone.Repo.Migrations.AddIndexesToTables do
   use Ecto.Migration
 
   def change do

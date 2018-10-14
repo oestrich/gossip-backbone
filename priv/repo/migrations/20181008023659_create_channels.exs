@@ -1,4 +1,4 @@
-defmodule Raisin.Repo.Migrations.CreateChannels do
+defmodule Backbone.Repo.Migrations.CreateChannels do
   use Ecto.Migration
 
   def change do

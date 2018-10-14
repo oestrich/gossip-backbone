@@ -1,4 +1,4 @@
-defmodule Raisin.Repo.Migrations.CreateGames do
+defmodule Backbone.Repo.Migrations.CreateGames do
   use Ecto.Migration
 
   def change do
