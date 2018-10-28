@@ -28,6 +28,7 @@ defmodule Backbone.MixProject do
   defp deps do
     [
       {:ecto, "~> 2.2"},
+      {:elixir_uuid, "~> 1.2", only: [:test]},
       {:poison, "~> 3.0"},
       {:postgrex, "~> 0.13"},
     ]

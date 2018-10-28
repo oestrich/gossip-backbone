@@ -14,7 +14,7 @@ defmodule Backbone.Games.Connection do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:type, :url, :host, :port])
+    |> cast(params, [:id, :type, :url, :host, :port])
     |> validate_required([:type])
   end
 end

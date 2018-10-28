@@ -5,6 +5,7 @@ defmodule Backbone.Games do
 
   @type opts :: Keyword.t()
 
+  alias Backbone.Games.Connection
   alias Backbone.Games.Game
   alias Backbone.RemoteSchema
 
@@ -81,14 +82,78 @@ defmodule Backbone.Games do
 
     case @repo.get_by(Game, remote_id: remote_id) do
       nil ->
-        %Game{}
-        |> Game.changeset(attributes)
-        |> @repo.insert()
+        create_game(attributes)
 
       game ->
-        game
-        |> Game.changeset(attributes)
-        |> @repo.update()
+        update_game(game, attributes)
     end
+  end
+
+  defp create_game(attributes) do
+    %Game{}
+    |> Game.changeset(attributes)
+    |> @repo.insert()
+  end
+
+  defp update_game(game, attributes) do
+    connections = Map.get(attributes, "connections", [])
+    attributes = Map.delete(attributes, "connections")
+    changeset = game |> Game.changeset(attributes)
+
+    with {:ok, game} <- @repo.update(changeset) do
+      update_connections(game, connections)
+    end
+  end
+
+  # Find connections to
+  # - Update
+  # - Delete
+  # - Create
+  defp update_connections(game, connections) do
+    changesets =
+      game
+      |> create_connection_changesets(connections)
+      |> update_connection_changesets(game, connections)
+      |> delete_connection_changesets(game, connections)
+
+    game
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.put_embed(:connections, changesets)
+    |> @repo.update()
+  end
+
+  defp create_connection_changesets(game, connections) do
+    connection_ids = Enum.map(game.connections, &(&1.id))
+    create_connections = Enum.reject(connections, fn connection ->
+      connection["id"] in connection_ids
+    end)
+
+    Enum.map(create_connections, fn connection ->
+      Connection.changeset(%Connection{}, connection)
+    end)
+  end
+
+  defp update_connection_changesets(changesets, game, connections) do
+    connection_ids = Enum.map(connections, &(&1["id"]))
+    update_connections = Enum.filter(game.connections, fn connection ->
+      connection.id in connection_ids
+    end)
+
+    Enum.reduce(update_connections, changesets, fn connection, changesets ->
+      attributes = Enum.find(connections, &(&1["id"] == connection.id))
+      [Connection.changeset(connection, attributes) | changesets]
+    end)
+  end
+
+  defp delete_connection_changesets(changesets, game, connections) do
+    connection_ids = Enum.map(connections, &(&1["id"]))
+    delete_connections = Enum.reject(game.connections, fn connection ->
+      connection.id in connection_ids
+    end)
+
+    Enum.reduce(delete_connections, changesets, fn connection, changesets ->
+      changeset = Ecto.Changeset.change(connection)
+      [%{changeset | action: :delete} | changesets]
+    end)
   end
 end

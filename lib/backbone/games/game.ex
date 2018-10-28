@@ -18,7 +18,7 @@ defmodule Backbone.Games.Game do
     field(:homepage_url, :string)
     field(:allow_character_registration, :boolean)
 
-    embeds_many(:connections, Connection, on_replace: :delete)
+    embeds_many(:connections, Connection)
 
     timestamps()
   end

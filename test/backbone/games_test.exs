@@ -47,23 +47,61 @@ defmodule Backbone.GamesTest do
     end
 
     test "updates connections" do
+      connection = %{"id" => UUID.uuid4(), "type" => "web", "url" => "https://example.com/play"}
+
+      game = %{
+        "id" => 1,
+        "game" => "gossip",
+        "display_name" => "Gossip",
+        "display" => true,
+        "connections" => [connection]
+      }
+
+      :ok = Games.cache_remote([game])
+
       game = %{
         "id" => 1,
         "game" => "gossip",
         "display_name" => "Gossip",
         "display" => true,
         "connections" => [
-          %{"type" => "web", "url" => "https://example.com/play"},
-          %{"type" => "telnet", "host" => "example.com", "port" => 4000},
-          %{"type" => "secure telnet", "host" => "example.com", "port" => 4000},
+          connection,
+          %{"id" => UUID.uuid4(), "type" => "telnet", "host" => "example.com", "port" => 4000},
         ]
       }
 
       :ok = Games.cache_remote([game])
+
+      {:ok, game} = Games.get_by_name("gossip")
+      assert length(game.connections) == 2
+    end
+
+    test "deletes connections" do
+      game = %{
+        "id" => 1,
+        "game" => "gossip",
+        "display_name" => "Gossip",
+        "display" => true,
+        "connections" => [
+          %{"id" => UUID.uuid4(), "type" => "web", "url" => "https://example.com/play"},
+          %{"id" => UUID.uuid4(), "type" => "secure telnet", "host" => "example.com", "port" => 4000},
+        ]
+      }
+
+      :ok = Games.cache_remote([game])
+
+      game = %{
+        "id" => 1,
+        "game" => "gossip",
+        "display_name" => "Gossip",
+        "display" => true,
+        "connections" => []
+      }
+
       :ok = Games.cache_remote([game])
 
       {:ok, game} = Games.get_by_name("gossip")
-      assert length(game.connections) == 3
+      assert length(game.connections) == 0
     end
   end
 end
