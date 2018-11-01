@@ -6,7 +6,14 @@ defmodule Backbone.GamesTest do
   describe "sync remote games" do
     test "creates local copies" do
       :ok = Games.cache_remote([
-        %{"id" => 1, "game" => "gossip", "display_name" => "Gossip", "display" => true}
+        %{
+          "id" => 1,
+          "game" => "gossip",
+          "display_name" => "Gossip",
+          "display" => true,
+          "client_id" => "UUID",
+          "client_secret" => "UUID",
+        }
       ])
 
       assert length(Games.all()) == 1
@@ -14,11 +21,25 @@ defmodule Backbone.GamesTest do
 
     test "creates local copies, handles updates" do
       :ok = Games.cache_remote([
-        %{"id" => 1, "game" => "gossip", "display_name" => "Gossip", "display" => true}
+        %{
+          "id" => 1,
+          "game" => "gossip",
+          "display_name" => "Gossip",
+          "display" => true,
+          "client_id" => "UUID",
+          "client_secret" => "UUID",
+        }
       ])
 
       :ok = Games.cache_remote([
-        %{"id" => 1, "game" => "gossip", "display_name" => "Updated", "display" => true}
+        %{
+          "id" => 1,
+          "game" => "gossip",
+          "display_name" => "Updated",
+          "display" => true,
+          "client_id" => "UUID",
+          "client_secret" => "UUID",
+        }
       ])
 
       assert length(Games.all()) == 1
@@ -34,6 +55,8 @@ defmodule Backbone.GamesTest do
           "game" => "gossip",
           "display_name" => "Gossip",
           "display" => true,
+          "client_id" => "UUID",
+          "client_secret" => "UUID",
           "connections" => [
             %{"type" => "web", "url" => "https://example.com/play"},
             %{"type" => "telnet", "host" => "example.com", "port" => 4000},
@@ -54,6 +77,8 @@ defmodule Backbone.GamesTest do
         "game" => "gossip",
         "display_name" => "Gossip",
         "display" => true,
+        "client_id" => "UUID",
+        "client_secret" => "UUID",
         "connections" => [connection]
       }
 
@@ -64,6 +89,8 @@ defmodule Backbone.GamesTest do
         "game" => "gossip",
         "display_name" => "Gossip",
         "display" => true,
+        "client_id" => "UUID",
+        "client_secret" => "UUID",
         "connections" => [
           connection,
           %{"id" => UUID.uuid4(), "type" => "telnet", "host" => "example.com", "port" => 4000},
@@ -82,6 +109,8 @@ defmodule Backbone.GamesTest do
         "game" => "gossip",
         "display_name" => "Gossip",
         "display" => true,
+        "client_id" => "UUID",
+        "client_secret" => "UUID",
         "connections" => [
           %{"id" => UUID.uuid4(), "type" => "web", "url" => "https://example.com/play"},
           %{"id" => UUID.uuid4(), "type" => "secure telnet", "host" => "example.com", "port" => 4000},
@@ -95,6 +124,8 @@ defmodule Backbone.GamesTest do
         "game" => "gossip",
         "display_name" => "Gossip",
         "display" => true,
+        "client_id" => "UUID",
+        "client_secret" => "UUID",
         "connections" => []
       }
 

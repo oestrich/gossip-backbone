@@ -17,6 +17,8 @@ defmodule Backbone.Games.Game do
     field(:description, :string)
     field(:homepage_url, :string)
     field(:allow_character_registration, :boolean)
+    field(:client_id, :string)
+    field(:client_secret, :string)
 
     embeds_many(:connections, Connection)
 
@@ -32,14 +34,16 @@ defmodule Backbone.Games.Game do
     :user_agent_url,
     :description,
     :homepage_url,
-    :allow_character_registration
+    :allow_character_registration,
+    :client_id,
+    :client_secret
   ]
 
   def changeset(struct, params) do
     struct
     |> cast(params, @fields)
     |> cast_embed(:connections, with: &Connection.changeset/2)
-    |> validate_required([:remote_id, :name, :short_name, :display, :connections])
+    |> validate_required([:remote_id, :name, :short_name, :display, :connections, :client_id, :client_secret])
     |> unique_constraint(:short_name, name: :games_lower_short_name_index)
   end
 end
