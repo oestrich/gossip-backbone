@@ -50,6 +50,19 @@ defmodule Backbone.Games do
   @doc """
   Get a game by name
   """
+  def get_by(opts) do
+    case @repo.get_by(Game, opts) do
+      nil ->
+        {:error, :not_found}
+
+      game ->
+        {:ok, game}
+    end
+  end
+
+  @doc """
+  Get a game by name
+  """
   def get_by_name(name, opts \\ []) do
     case @repo.get_by(Game, Keyword.merge(opts, [short_name: name])) do
       nil ->
