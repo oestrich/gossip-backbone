@@ -84,7 +84,8 @@ defmodule Backbone.Games do
     :ok
   end
 
-  defp cache_game(attributes) do
+  @doc false
+  def cache_game(attributes) do
     remote_id = Map.get(attributes, "id")
 
     attributes = RemoteSchema.map_fields(attributes, %{

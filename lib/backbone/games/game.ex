@@ -19,6 +19,7 @@ defmodule Backbone.Games.Game do
     field(:allow_character_registration, :boolean)
     field(:client_id, :string)
     field(:client_secret, :string)
+    field(:redirect_uris, {:array, :string})
 
     embeds_many(:connections, Connection)
 
@@ -36,7 +37,8 @@ defmodule Backbone.Games.Game do
     :homepage_url,
     :allow_character_registration,
     :client_id,
-    :client_secret
+    :client_secret,
+    :redirect_uris
   ]
 
   def changeset(struct, params) do

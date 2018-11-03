@@ -134,5 +134,19 @@ defmodule Backbone.GamesTest do
       {:ok, game} = Games.get_by_name("gossip")
       assert length(game.connections) == 0
     end
+
+    test "caches redirect_uris" do
+      {:ok, game} = Games.cache_game(%{
+        "id" => 1,
+        "game" => "gossip",
+        "display_name" => "Gossip",
+        "display" => true,
+        "client_id" => "UUID",
+        "client_secret" => "UUID",
+        "redirect_uris" => ["https://example.com/callback"]
+      })
+
+      assert game.redirect_uris == ["https://example.com/callback"]
+    end
   end
 end
