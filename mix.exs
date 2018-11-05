@@ -27,9 +27,10 @@ defmodule Backbone.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "~> 2.2"},
+      {:ecto, "~> 3.0"},
+      {:ecto_sql, "~> 3.0"},
       {:elixir_uuid, "~> 1.2", only: [:test]},
-      {:poison, "~> 3.0"},
+      {:jason, "~> 1.1"},
       {:postgrex, "~> 0.13"},
     ]
   end
