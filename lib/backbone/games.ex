@@ -21,6 +21,7 @@ defmodule Backbone.Games do
     Game
     |> sort(opts)
     |> maybe_include_hidden(opts)
+    |> maybe_only_online(opts)
     |> @repo.all()
   end
 
@@ -44,6 +45,18 @@ defmodule Backbone.Games do
         query |> where([g], g.display == true)
 
       true ->
+        query
+    end
+  end
+
+  defp maybe_only_online(query, opts) do
+    case Keyword.get(opts, :only_online, false) do
+      true ->
+        active_cutoff = Timex.now() |> Timex.shift(minutes: -1)
+
+        query |> where([g], g.last_seen_at > ^active_cutoff)
+
+      false ->
         query
     end
   end
