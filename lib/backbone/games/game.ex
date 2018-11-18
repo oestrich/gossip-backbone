@@ -20,6 +20,7 @@ defmodule Backbone.Games.Game do
     field(:client_id, :string)
     field(:client_secret, :string)
     field(:redirect_uris, {:array, :string})
+    field(:last_seen_at, :utc_datetime)
 
     embeds_many(:connections, Connection)
 
@@ -47,5 +48,11 @@ defmodule Backbone.Games.Game do
     |> cast_embed(:connections, with: &Connection.changeset/2)
     |> validate_required([:remote_id, :name, :short_name, :display, :connections, :client_id, :client_secret])
     |> unique_constraint(:short_name, name: :games_lower_short_name_index)
+  end
+
+  def online_changeset(struct, params) do
+    struct
+    |> cast(params, [:last_seen_at])
+    |> validate_required([:last_seen_at])
   end
 end

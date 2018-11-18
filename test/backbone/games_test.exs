@@ -149,4 +149,14 @@ defmodule Backbone.GamesTest do
       assert game.redirect_uris == ["https://example.com/callback"]
     end
   end
+
+  describe "touching a game's online status" do
+    test "game is online" do
+      game = cache_game()
+
+      {:ok, game} = Games.touch_online(game)
+
+      assert game.last_seen_at
+    end
+  end
 end

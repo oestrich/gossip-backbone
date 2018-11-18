@@ -19,9 +19,23 @@ defmodule Backbone.Games do
   @spec all(opts()) :: [Game.t()]
   def all(opts \\ []) do
     Game
-    |> order_by([g], g.name)
+    |> sort(opts)
     |> maybe_include_hidden(opts)
     |> @repo.all()
+  end
+
+  defp sort(query, opts) do
+    case Keyword.get(opts, :sort, :name) do
+      :name ->
+        query |> order_by([g], g.name)
+
+      :online ->
+        active_cutoff = Timex.now() |> Timex.shift(minutes: -1)
+
+        query
+        |> order_by([g], g.last_seen_at > ^active_cutoff)
+        |> order_by([g], g.name)
+    end
   end
 
   defp maybe_include_hidden(query, opts) do
@@ -71,6 +85,15 @@ defmodule Backbone.Games do
       game ->
         {:ok, game}
     end
+  end
+
+  @doc """
+  Touching a game's online status
+  """
+  def touch_online(game) do
+    game
+    |> Game.online_changeset(%{last_seen_at: Timex.now()})
+    |> @repo.update()
   end
 
   @doc """

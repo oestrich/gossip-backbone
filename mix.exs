@@ -32,6 +32,7 @@ defmodule Backbone.MixProject do
       {:elixir_uuid, "~> 1.2", only: [:test]},
       {:jason, "~> 1.1"},
       {:postgrex, "~> 0.13"},
+      {:timex, "~> 3.4"},
     ]
   end
 end
