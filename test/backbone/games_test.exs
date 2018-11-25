@@ -8,6 +8,7 @@ defmodule Backbone.GamesTest do
       :ok = Games.cache_remote([
         %{
           "action" => "create",
+          "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
             "game" => "gossip",
@@ -26,6 +27,7 @@ defmodule Backbone.GamesTest do
       :ok = Games.cache_remote([
         %{
           "action" => "create",
+          "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
             "game" => "gossip",
@@ -40,6 +42,7 @@ defmodule Backbone.GamesTest do
       :ok = Games.cache_remote([
         %{
           "action" => "update",
+          "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
             "game" => "gossip",
@@ -61,6 +64,7 @@ defmodule Backbone.GamesTest do
       :ok = Games.cache_remote([
         %{
           "action" => "update",
+          "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
             "game" => "gossip",
@@ -86,6 +90,7 @@ defmodule Backbone.GamesTest do
 
       version = %{
         "action" => "update",
+        "logged_at" => "2018-11-24T12:00:00Z",
         "payload" => %{
           "id" => 1,
           "game" => "gossip",
@@ -101,6 +106,7 @@ defmodule Backbone.GamesTest do
 
       version = %{
         "action" => "update",
+        "logged_at" => "2018-11-24T12:00:00Z",
         "payload" => %{
           "id" => 1,
           "game" => "gossip",
@@ -124,6 +130,7 @@ defmodule Backbone.GamesTest do
     test "deletes connections" do
       version = %{
         "action" => "update",
+        "logged_at" => "2018-11-24T12:00:00Z",
         "payload" => %{
           "id" => 1,
           "game" => "gossip",
@@ -142,6 +149,7 @@ defmodule Backbone.GamesTest do
 
       version = %{
         "action" => "update",
+        "logged_at" => "2018-11-24T12:00:00Z",
         "payload" => %{
           "id" => 1,
           "game" => "gossip",
@@ -162,6 +170,7 @@ defmodule Backbone.GamesTest do
     test "caches redirect_uris" do
       {:ok, game} = Games.cache_game(%{
         "action" => "create",
+        "logged_at" => "2018-11-24T12:00:00Z",
         "payload" => %{
           "id" => 1,
           "game" => "gossip",

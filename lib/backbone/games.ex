@@ -8,6 +8,7 @@ defmodule Backbone.Games do
   alias Backbone.Games.Connection
   alias Backbone.Games.Game
   alias Backbone.RemoteSchema
+  alias Backbone.Settings
 
   import Ecto.Query
 
@@ -114,8 +115,10 @@ defmodule Backbone.Games do
 
   Create or update remote games
   """
-  def cache_remote(games) do
-    Enum.each(games, &cache_game/1)
+  def cache_remote(versions) do
+    versions
+    |> Settings.mark_sync()
+    |> Enum.each(&cache_game/1)
 
     :ok
   end

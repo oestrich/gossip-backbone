@@ -7,6 +7,7 @@ defmodule Backbone.Channels do
 
   alias Backbone.Channels.Channel
   alias Backbone.RemoteSchema
+  alias Backbone.Settings
 
   @repo Application.get_env(:backbone, :repo)
 
@@ -50,8 +51,10 @@ defmodule Backbone.Channels do
 
   Create or update remote channels
   """
-  def cache_remote(channels) do
-    Enum.each(channels, &cache_channel/1)
+  def cache_remote(versions) do
+    versions
+    |> Settings.mark_sync()
+    |> Enum.each(&cache_channel/1)
 
     :ok
   end

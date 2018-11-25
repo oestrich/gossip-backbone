@@ -8,6 +8,7 @@ defmodule Backbone.ChannelsTest do
       :ok = Channels.cache_remote([
         %{
           "action" => "create",
+          "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
             "name" => "gossip",
@@ -24,6 +25,7 @@ defmodule Backbone.ChannelsTest do
       :ok = Channels.cache_remote([
         %{
           "action" => "create",
+          "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
             "name" => "gossip",
@@ -36,6 +38,7 @@ defmodule Backbone.ChannelsTest do
       :ok = Channels.cache_remote([
         %{
           "action" => "update",
+          "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
             "name" => "gossip",
