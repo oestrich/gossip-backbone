@@ -5,6 +5,7 @@ defmodule Backbone.Games.Game do
 
   use Backbone.Schema
 
+  alias Backbone.Events.Event
   alias Backbone.Games.Connection
 
   schema "games" do
@@ -23,6 +24,8 @@ defmodule Backbone.Games.Game do
     field(:last_seen_at, :utc_datetime)
 
     embeds_many(:connections, Connection)
+
+    has_many(:events, Event)
 
     timestamps()
   end

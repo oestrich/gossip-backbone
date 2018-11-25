@@ -4,6 +4,7 @@ defmodule Backbone.Sync do
   """
 
   alias Backbone.Channels
+  alias Backbone.Events
   alias Backbone.Games
   alias Backbone.Settings
 
@@ -50,6 +51,12 @@ defmodule Backbone.Sync do
   def sync_games(event) do
     with {:ok, versions} <- Map.fetch(event, "payload") do
       Games.cache_remote(versions)
+    end
+  end
+
+  def sync_events(event) do
+    with {:ok, versions} <- Map.fetch(event, "payload") do
+      Events.cache_remote(versions)
     end
   end
 end
