@@ -5,16 +5,27 @@ defmodule Backbone.Sync do
 
   alias Backbone.Channels
   alias Backbone.Games
+  alias Backbone.Settings
 
-  def trigger_sync(since \\ nil) do
+  def trigger_sync() do
     event = %{
       "event" => "sync",
       "payload" => %{
-        "since" => since
+        "since" => last_synced_at()
       }
     }
 
     WebSockex.cast(Gossip.Socket, {:send, event})
+  end
+
+  defp last_synced_at() do
+    with {:ok, last_synced_at} <- Settings.last_synced_at() do
+      {:ok, last_synced_at_timestamp} = Timex.parse(last_synced_at.value, "{ISO:Extended}")
+      last_synced_at_timestamp
+    else
+      {:error, :not_found} ->
+        nil
+    end
   end
 
   def sync_channels(state, event) do
