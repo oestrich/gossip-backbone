@@ -56,7 +56,8 @@ defmodule Backbone.Channels do
     :ok
   end
 
-  defp cache_channel(attributes) do
+  defp cache_channel(version) do
+    attributes = version["payload"]
     remote_id = Map.get(attributes, "id")
 
     attributes = RemoteSchema.map_fields(attributes, %{

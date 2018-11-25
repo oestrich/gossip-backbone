@@ -6,7 +6,15 @@ defmodule Backbone.ChannelsTest do
   describe "sync remote channels" do
     test "creates local copies" do
       :ok = Channels.cache_remote([
-        %{"id" => 1, "name" => "gossip", "description" => nil, "hidden" => true}
+        %{
+          "action" => "create",
+          "payload" => %{
+            "id" => 1,
+            "name" => "gossip",
+            "description" => nil,
+            "hidden" => true
+          }
+        }
       ])
 
       assert length(Channels.all(include_hidden: true)) == 1
@@ -14,11 +22,27 @@ defmodule Backbone.ChannelsTest do
 
     test "creates local copies, handles updates" do
       :ok = Channels.cache_remote([
-        %{"id" => 1, "name" => "gossip", "description" => nil, "hidden" => true}
+        %{
+          "action" => "create",
+          "payload" => %{
+            "id" => 1,
+            "name" => "gossip",
+            "description" => nil,
+            "hidden" => true
+          }
+        }
       ])
 
       :ok = Channels.cache_remote([
-        %{"id" => 1, "name" => "gossip", "description" => "updated", "hidden" => true}
+        %{
+          "action" => "update",
+          "payload" => %{
+            "id" => 1,
+            "name" => "gossip",
+            "description" => "updated",
+            "hidden" => true
+          }
+        }
       ])
 
       assert length(Channels.all(include_hidden: true)) == 1

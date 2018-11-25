@@ -6,13 +6,24 @@ defmodule Backbone.Sync do
   alias Backbone.Channels
   alias Backbone.Games
 
+  def trigger_sync(since \\ nil) do
+    event = %{
+      "event" => "sync",
+      "payload" => %{
+        "since" => since
+      }
+    }
+
+    WebSockex.cast(Gossip.Socket, {:send, event})
+  end
+
   def sync_channels(state, event) do
-    with {:ok, payload} <- Map.fetch(event, "payload"),
-         {:ok, channels} <- Map.fetch(payload, "channels") do
-      Channels.cache_remote(channels)
+    with {:ok, versions} <- Map.fetch(event, "payload") do
+      Channels.cache_remote(versions)
 
       channels =
-        Enum.reduce(channels, state.channels, fn channel, channels ->
+        Enum.reduce(versions, state.channels, fn version, channels ->
+          channel = version.payload
           [channel["name"] | channels]
         end)
 
@@ -26,9 +37,8 @@ defmodule Backbone.Sync do
   end
 
   def sync_games(event) do
-    with {:ok, payload} <- Map.fetch(event, "payload"),
-         {:ok, games} <- Map.fetch(payload, "games") do
-      Games.cache_remote(games)
+    with {:ok, versions} <- Map.fetch(event, "payload") do
+      Games.cache_remote(versions)
     end
   end
 end

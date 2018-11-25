@@ -11,7 +11,7 @@ defmodule Backbone.TestHelpers do
       "hidden" => false,
     }, attributes)
 
-    Channels.cache_remote([attributes])
+    Channels.cache_remote([%{"action" => "create", "payload" => attributes}])
 
     {:ok, channel} = Channels.get(attributes["name"])
     channel
@@ -28,7 +28,7 @@ defmodule Backbone.TestHelpers do
       "client_secret" => "UUID",
     }, attributes)
 
-    Games.cache_remote([attributes])
+    Games.cache_remote([%{"action" => "create", "payload" => attributes}])
 
     {:ok, game} = Games.get_by_name(attributes["game"])
     game

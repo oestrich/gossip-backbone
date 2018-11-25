@@ -33,6 +33,7 @@ defmodule Backbone.MixProject do
       {:jason, "~> 1.1"},
       {:postgrex, "~> 0.13"},
       {:timex, "~> 3.4"},
+      {:websockex, "~> 0.4.0"}
     ]
   end
 end
