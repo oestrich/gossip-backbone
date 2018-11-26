@@ -17,6 +17,17 @@ defmodule Backbone.Events do
   def all(game) do
     Event
     |> where([e], e.game_id == ^game.id)
+    |> order_by([e], desc: e.start_date, desc: e.end_date)
+    |> @repo.all()
+  end
+
+  def recent(game) do
+    last_week = Timex.now() |> Timex.shift(weeks: -1)
+
+    Event
+    |> where([e], e.game_id == ^game.id)
+    |> where([e], e.start_date >= ^last_week)
+    |> order_by([e], asc: e.start_date, asc: e.end_date)
     |> @repo.all()
   end
 
