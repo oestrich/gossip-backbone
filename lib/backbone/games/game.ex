@@ -22,6 +22,7 @@ defmodule Backbone.Games.Game do
     field(:client_secret, :string)
     field(:redirect_uris, {:array, :string})
     field(:last_seen_at, :utc_datetime)
+    field(:mssp_last_seen_at, :utc_datetime)
 
     embeds_many(:connections, Connection)
 
@@ -42,7 +43,8 @@ defmodule Backbone.Games.Game do
     :allow_character_registration,
     :client_id,
     :client_secret,
-    :redirect_uris
+    :redirect_uris,
+    :mssp_last_seen_at
   ]
 
   def changeset(struct, params) do

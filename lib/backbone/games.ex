@@ -33,9 +33,10 @@ defmodule Backbone.Games do
 
       :online ->
         active_cutoff = Timex.now() |> Timex.shift(minutes: -1)
+        mssp_cutoff = Timex.now() |> Timex.shift(minutes: -90)
 
         query
-        |> order_by([g], fragment("coalesce(?, ?) > ? desc nulls last", g.last_seen_at, ^active_cutoff, ^active_cutoff))
+        |> order_by([g], fragment("coalesce(?, ?) > ? or coalesce(?, ?) > ? desc nulls last", g.last_seen_at, ^active_cutoff, ^active_cutoff, g.mssp_last_seen_at, ^mssp_cutoff, ^mssp_cutoff))
         |> order_by([g], g.name)
     end
   end
