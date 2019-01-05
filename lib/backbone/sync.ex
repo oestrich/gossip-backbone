@@ -3,6 +3,7 @@ defmodule Backbone.Sync do
   Sync remote models to the local db
   """
 
+  alias Backbone.Achievements
   alias Backbone.Channels
   alias Backbone.Events
   alias Backbone.Games
@@ -57,6 +58,12 @@ defmodule Backbone.Sync do
   def sync_events(event) do
     with {:ok, versions} <- Map.fetch(event, "payload") do
       Events.cache_remote(versions)
+    end
+  end
+
+  def sync_achievements(achievement) do
+    with {:ok, versions} <- Map.fetch(achievement, "payload") do
+      Achievements.cache_remote(versions)
     end
   end
 end

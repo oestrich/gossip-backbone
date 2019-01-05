@@ -5,6 +5,7 @@ defmodule Backbone.Games.Game do
 
   use Backbone.Schema
 
+  alias Backbone.Achievements.Achievement
   alias Backbone.Events.Event
   alias Backbone.Games.Connection
 
@@ -26,6 +27,7 @@ defmodule Backbone.Games.Game do
 
     embeds_many(:connections, Connection)
 
+    has_many(:achievements, Achievement)
     has_many(:events, Event)
 
     timestamps()
