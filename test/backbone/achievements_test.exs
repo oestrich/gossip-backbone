@@ -107,7 +107,7 @@ defmodule Backbone.AchievementsTest do
         }
       ])
 
-      assert length(Achievements.all(game)) == 1
+      assert length(Achievements.all(game)) == 0
 
       {:ok, achievement} = Achievements.get_by(remote_id: 1)
       assert achievement.is_deleted
