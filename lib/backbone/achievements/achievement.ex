@@ -9,6 +9,7 @@ defmodule Backbone.Achievements.Achievement do
 
   schema "achievements" do
     field(:remote_id, :integer)
+    field(:key, Ecto.UUID)
     field(:title, :string)
     field(:description, :string)
     field(:display, :boolean)
@@ -24,6 +25,7 @@ defmodule Backbone.Achievements.Achievement do
 
   @fields [
     :remote_id,
+    :key,
     :title,
     :description,
     :display,
@@ -35,7 +37,7 @@ defmodule Backbone.Achievements.Achievement do
   def changeset(struct, params) do
     struct
     |> cast(params, @fields)
-    |> validate_required([:remote_id, :title, :display, :points, :partial_progress])
+    |> validate_required([:remote_id, :key, :title, :display, :points, :partial_progress])
   end
 
   def deleted_changeset(struct) do

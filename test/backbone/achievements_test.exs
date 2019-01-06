@@ -13,6 +13,7 @@ defmodule Backbone.AchievementsTest do
           "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
+            "key" => UUID.uuid4(),
             "title" => "Achievement",
             "game_id" => game.remote_id,
             "description" => "An achievement",
@@ -36,6 +37,7 @@ defmodule Backbone.AchievementsTest do
           "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
+            "key" => UUID.uuid4(),
             "title" => "Achievement",
             "game_id" => game.remote_id,
             "description" => "An achievement",
@@ -53,6 +55,7 @@ defmodule Backbone.AchievementsTest do
           "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
+            "key" => UUID.uuid4(),
             "title" => "Updated",
             "game_id" => game.remote_id,
             "description" => "An achievement",
@@ -79,6 +82,7 @@ defmodule Backbone.AchievementsTest do
           "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
+            "key" => UUID.uuid4(),
             "title" => "Achievement",
             "game_id" => game.remote_id,
             "description" => "An achievement",
@@ -96,6 +100,7 @@ defmodule Backbone.AchievementsTest do
           "logged_at" => "2018-11-24T12:00:00Z",
           "payload" => %{
             "id" => 1,
+            "key" => UUID.uuid4(),
             "title" => "Updated",
             "game_id" => game.remote_id,
             "description" => "An achievement",
