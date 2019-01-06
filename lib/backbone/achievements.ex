@@ -17,7 +17,7 @@ defmodule Backbone.Achievements do
   def all(game) do
     Achievement
     |> where([a], a.game_id == ^game.id)
-    |> where([a], !a.is_deleted)
+    |> where([a], a.is_deleted == false)
     |> order_by([a], asc: a.title)
     |> @repo.all()
   end
